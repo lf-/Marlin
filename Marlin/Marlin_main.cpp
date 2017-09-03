@@ -4195,6 +4195,7 @@ void home_all_axes() { gcode_G28(true); }
    *  S3 Xn Yn Zn.nn  Manually modify a single point
    *  S4 Zn.nn        Set z offset. Positive away from bed, negative closer to bed.
    *  S5              Reset and disable mesh
+   *  S6              Enables the mesh
    *
    * The S0 report the points as below
    *
@@ -4212,8 +4213,8 @@ void home_all_axes() { gcode_G28(true); }
     #endif
 
     const MeshLevelingState state = (MeshLevelingState)parser.byteval('S', (int8_t)MeshReport);
-    if (!WITHIN(state, 0, 5)) {
-      SERIAL_PROTOCOLLNPGM("S out of range (0-5).");
+    if (!WITHIN(state, 0, 6)) {
+      SERIAL_PROTOCOLLNPGM("S out of range (0-6).");
       return;
     }
 
@@ -4328,6 +4329,10 @@ void home_all_axes() { gcode_G28(true); }
 
       case MeshReset:
         reset_bed_level();
+        break;
+
+      case MeshEnable:
+        mbl.set_has_mesh(true);
         break;
 
     } // switch(state)
