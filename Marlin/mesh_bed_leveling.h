@@ -30,8 +30,7 @@
     MeshNext,
     MeshSet,
     MeshSetZOffset,
-    MeshReset,
-    MeshEnable
+    MeshReset
   };
 
   enum MBLStatus {
